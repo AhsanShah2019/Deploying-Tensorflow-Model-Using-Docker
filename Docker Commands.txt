@@ -1,0 +1,9 @@
+docker pull tensorflow/serving:latest
+
+docker run -p 8501:8501 \
+  --mount type=bind,\
+source=E:\Career\AI\MetaTalent\Azure_AI_Tutorial\AI_Tutorial\Course_3\Module_7\Projects\TensorflowServing\serving-master\tensorflow_serving/servables/tensorflow/testdata/saved_model_half_plus_two_cpu,\
+target=/models/half_plus_two \
+  -e MODEL_NAME=half_plus_two -t tensorflow/serving &
+
+curl -d "{\"instances\": [1.0,2.0,5.0]}" -X POST http://localhost:8501/v1/models/half_plus_two:predict
